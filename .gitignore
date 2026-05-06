@@ -1,0 +1,24 @@
+# JetBrains / Rider
+.idea/
+*.sln.iml
+
+# .NET build output
+**/bin/
+**/obj/
+
+# User-specific C# / Visual Studio / Rider metadata
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Local IDE folders
+.vs/
+
+# XML files
+*.xml
+
+# macOS
+.DS_Store
+
