@@ -1,3 +1,1 @@
 # TradingSystemKata
-# TradingSystemKata
-# TradingSystemKata
