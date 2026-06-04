@@ -9,7 +9,7 @@ public class TradingAccountTests
     [Test]
     public void GivenAnBuyOrderOf1Stock_AndCustomerMoneyOf()
     {
-        var customerMoney = 1;
+        var customerMoney = new Money(1);
         var result = new TradingAccount(customerMoney).ProcessTrade(new StockRequest("AAL", 1, 1));
         result.Should().Be(Success);
     }
@@ -17,7 +17,7 @@ public class TradingAccountTests
     [Test]
     public void GivenABuyOrderWith1Pound_AndCustomerMoneyOf0()
     {
-        var customerMoney = 0;
+        var customerMoney = new Money(0);
         var result = new TradingAccount(customerMoney).ProcessTrade(new StockRequest("AAL", 1, 1));
         result.Should().Be(InsufficientBalance);
     }
@@ -25,7 +25,7 @@ public class TradingAccountTests
     [Test]
     public void GivenABuyOrderOf2StocksAt1Pound_AndCustomerMoney1Pound_ReturnsOrderRejected()
     {
-        var customerMoney = 1;
+        var customerMoney = new Money(1);
         var result = new TradingAccount(customerMoney).ProcessTrade(new StockRequest("AAL" , 1, 2));
         result.Should().Be(InsufficientBalance);
     }
@@ -33,7 +33,7 @@ public class TradingAccountTests
     [Test]
     public void GivenACustomerBuysTwice_AndCustomerMoneyIsEnoughForOneBuy_ReturnsOrderAcceptedThenOrderRejected()
     {
-        var customerMoney = 1;
+        var customerMoney = new Money(1);
         var tradingSystem = new TradingAccount(customerMoney);
         var result1 = tradingSystem.ProcessTrade(new StockRequest("AAL" , 1, 1));
         var result2 = tradingSystem.ProcessTrade(new StockRequest("AAL" , 1, 1));
@@ -45,7 +45,7 @@ public class TradingAccountTests
     [Test]
     public void GivenACustomerHasSufficientAmountToBuyTrade_ThenTheStockIsAddedToTheAccount()
     {
-        var tradingAccount = new TradingAccount(100);
+        var tradingAccount = new TradingAccount(new Money(100));
         var stockName = "AAL";  
         
         tradingAccount.ProcessTrade(new StockRequest( stockName , 1, 1));
@@ -57,7 +57,7 @@ public class TradingAccountTests
     [Test]
     public void GivenACustomerHasSufficientAmountToBuyTheSameStockTwice_ThenTheStockIsAddedToTheAccount()
     {
-        var tradingAccount = new TradingAccount(100);
+        var tradingAccount = new TradingAccount(new Money(100));
         var stockName = "AAL";  
         
         tradingAccount.ProcessTrade(new StockRequest( stockName , 1, 1));
@@ -70,7 +70,7 @@ public class TradingAccountTests
     [Test]
     public void GivenACustomerHasSufficientFunds_ThenTheStockRequestIsAddedToTheAccount()
     {
-        var tradingAccount = new TradingAccount(100);
+        var tradingAccount = new TradingAccount(new Money(100));
         var stockName = "AAL";  
         
         tradingAccount.ProcessTrade(new StockRequest( stockName , 1, 10));

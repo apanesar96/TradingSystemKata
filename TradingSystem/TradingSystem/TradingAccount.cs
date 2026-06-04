@@ -3,22 +3,22 @@ using static TradingSystem.TradeResult;
 
 namespace TradingSystem;
 
-public class TradingAccount(int customerMoney)
+public class TradingAccount(Money customerMoney)
 {
-    private int _customerMoney = customerMoney;
+    private Money _customerMoney = customerMoney;
     private Dictionary<string, int> _positions = [];
     
     public IReadOnlyDictionary<string, int> Positions => _positions;
 
     public TradeResult ProcessTrade(StockRequest stockRequest)
     {
-        if (_customerMoney < stockRequest.TotalCost())
+        if (_customerMoney.IsLessThan(stockRequest.TotalCost()))
         {
             return InsufficientBalance;
         }
 
         AddPosition(stockRequest);
-        _customerMoney -= stockRequest.TotalCost();
+        _customerMoney = _customerMoney.Subtract(stockRequest.TotalCost());
         return Success;
     }
     
@@ -35,15 +35,4 @@ public class TradingAccount(int customerMoney)
             _positions[position.Key] += stockRequest.RequestAmount;
         }
     }
-}
-
-public record StockRequest(string StockName, int StockPrice, int RequestAmount)
-{
-    public int TotalCost() => StockPrice * RequestAmount;
-};
-
-public enum TradeResult
-{
-    InsufficientBalance,
-    Success,
 }
