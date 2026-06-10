@@ -79,4 +79,17 @@ public class TradingAccountTests
         tradingAccount.Positions.Should().BeEquivalentTo(expectedPositions);
     }
 
+    [Test]
+    public void GivenACustomerHasSufficientFunds_WhenTheCustomerWantsToSellAShare_ThenTheShareIsReduced()
+    {
+        var tradingAccount = new TradingAccount(new Money(100));
+        var stockName = "AAL";  
+        
+        tradingAccount.ProcessTrade(new StockRequest( stockName , 1, 100));
+        tradingAccount.ProcessTrade(new StockRequest( stockName , 1, 10), "Sell");
+        
+        var expectedPositions = new Dictionary<string, int> { {stockName, 90}};
+        tradingAccount.Positions.Should().BeEquivalentTo(expectedPositions);
+    }
+
 }
